@@ -1,0 +1,8 @@
+.message-card {
+    background-color: #682b51;
+    padding: 1rem;
+    max-width: 50%;
+    align-self: flex-end;
+    border-radius: 0.5rem;
+    margin-right: 5rem;
+};

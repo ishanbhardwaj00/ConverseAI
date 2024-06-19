@@ -1,0 +1,8 @@
+.new-chat {
+    display: flex;
+    flex: 85;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+}

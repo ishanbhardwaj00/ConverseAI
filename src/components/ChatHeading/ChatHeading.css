@@ -3,9 +3,9 @@
     align-items: center;
     width: 100%;
     border-bottom: 0.3px #3c454c solid;
-    font-weight: 300;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    letter-spacing: 14;
     color: white;
     padding-left: 1rem;
     flex: 8;
