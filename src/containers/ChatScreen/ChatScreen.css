@@ -1,4 +1,5 @@
 .main-chat-screen {
+  padding-left: 50px;
   background: #150c26;
   display: flex;
   flex-direction: column;

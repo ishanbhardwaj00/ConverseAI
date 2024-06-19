@@ -1,5 +1,40 @@
+.toggle-button {
+    position: fixed;
+    top: 20px;
+    left: 80px;
+    z-index: 1000;
+    border-color: white;
+    border-width: 2px;
+}
+  
 .sidebar {
-    width: 22%;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
     height: 100%;
-    background: #0d0122;
+    background-color: #0d0122;
+    color: white;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+}
+  
+.sidebar.open {
+    padding-top: 90px;
+    transform: translateX(0);
+}
+
+.sidebar.closed {
+    padding-top: 90px;
+}
+
+.welcome{
+    position: relative;
+    margin-top: 200px;
+    margin-left: 40px;
+    margin-right: -20px;
+    font-size: 20px;
+    align-content: justify;
 }
