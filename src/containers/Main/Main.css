@@ -4,4 +4,5 @@
   background-color: #180d2b;
   display: flex;
   flex-direction: row;
+  max-height: 100vh;
 }
