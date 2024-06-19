@@ -8,12 +8,12 @@ type MessageType =  {
 }
 
 const Chat = () => {
-  // let messages:MessageType[] = [{
-  //   message: "hello"
-  // }, {
-  //   message: "hello, how can i assist you?"
-  // }];
-  let messages :MessageType[] = [];
+  let messages:MessageType[] = [{
+    message: "hello"
+  }, {
+    message: "hello, how can i assist you?"
+  }];
+  // let messages :MessageType[] = [];
 
   if(messages.length === 0) {
     return <NewChat />
