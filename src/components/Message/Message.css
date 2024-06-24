@@ -5,4 +5,6 @@
     align-self: flex-end;
     border-radius: 0.5rem;
     margin-right: 5rem;
+    text-wrap: wrap;
+    overflow-wrap: break-word;
 };
