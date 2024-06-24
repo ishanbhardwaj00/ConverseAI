@@ -1,7 +1,13 @@
 * {
   font-family: 'Raleway';
   letter-spacing: 1px;
-  margin:0;padding:0;border:0;list-style:none;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;
+  margin:0;
+  padding:0;
+  border:0;
+  list-style:none;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
   color: white;
   letter-spacing: 2px;
 }
