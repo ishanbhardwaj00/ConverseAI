@@ -11,7 +11,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }) => {
 
   return (
-    <div>
+    <div className={`sidebar-container ${isSidebarOpen ? 'open' : 'closed'}`}>
         <button onClick={toggleSidebar} className="toggle-button">
           {isSidebarOpen ? <MdOutlineClose /> : <RiMenuFill />}
         </button>
