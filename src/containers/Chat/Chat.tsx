@@ -6,10 +6,7 @@ import { useState } from "react";
 
 import "./Chat.css";
 import axios from "axios";
-
-type MessageType = {
-  message: string;
-};
+import Reply from "../Reply/Reply";
 
 const Chat = () => {
   const [messages, setMessages] = useState([
@@ -38,6 +35,7 @@ const Chat = () => {
         temperature: 0.2,
       }
     );
+    appendMessage(response.data.choices[0].text);
     setLoading(false);
     console.log(response.data.choices[0].text);
   }
@@ -60,9 +58,7 @@ const Chat = () => {
           messages.map((message, index) => {
             if (index & 1)
               return (
-                <div>
-                  {message.message}, {index}
-                </div>
+                <Reply message={message.message}/>
               );
             else return <Message message={message.message} />;
           })
