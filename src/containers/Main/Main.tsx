@@ -13,7 +13,9 @@ const Main = () => {
   return (
     <div className="main">
       <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <ChatScreen isSidebarOpen={isSidebarOpen} />
+      {/* <div > */}
+        <ChatScreen isSidebarOpen={isSidebarOpen} />
+      {/* </div> */}
     </div>
   );
 };
