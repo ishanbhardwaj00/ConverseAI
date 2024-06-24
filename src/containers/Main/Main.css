@@ -1,8 +1,10 @@
 .main {
   height: 100vh;
   width: 100vw;
-  background-color: #180d2b;
+  background-color: #0d0122;
   display: flex;
   flex-direction: row;
   max-height: 100vh;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
 }

@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React from 'react';
+import { RiMenuFill } from "react-icons/ri";
+import { MdOutlineClose } from "react-icons/md";
 import './Sidebar.css'
 
-const Sidebar: React.FC = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+interface SidebarProps {
+    isSidebarOpen: boolean;
+    toggleSidebar: () => void;
+  }
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }) => {
 
   return (
     <div>
-      <div className="welcome">
-        <p>Welcome To Codestral AI</p>
-      </div>
-      <div>
         <button onClick={toggleSidebar} className="toggle-button">
-          {isSidebarOpen ? '❌' : '☰'}
+          {isSidebarOpen ? <MdOutlineClose /> : <RiMenuFill />}
         </button>
-      </div>
       <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
         <p>This is the sidebar content</p>
       </div>
