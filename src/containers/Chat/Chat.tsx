@@ -9,19 +9,24 @@ import axios from "axios";
 import Reply from "../Reply/Reply";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([
-    {
-      message:
-        "hello fvij'vwji;vvwjvwr;vw;rivwrjlvwrvliwrjvlviwrjvwlvjwrlvwrjv;lrvjwrilvrvlwir;jvwrlvjrwlvwrjvliwrvjr;lvwrj;vrwvil",
-    },
-    {
-      message: "hello, how can i assist you?",
-    },
-  ]);
+  type MessageType = {
+    message: string;
+  };
+  // const [messages, setMessages] = useState([
+  //   {
+  //     message:
+  //       "hello fvij'vwji;vvwjvwr;vw;rivwrjlvwrvliwrjvlviwrjvwlvjwrlvwrjv;lrvjwrilvrvlwir;jvwrlvjrwlvwrjvliwrvjr;lvwrj;vrwvil",
+  //   },
+  //   {
+  //     message: "hello, how can i assist you?",
+  //   },
+  // ]);
 
   // let messages :MessageType[] = [];
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
+
   async function getAnswer(question: string) {
     console.log("gETTING Nawer");
     setLoading(true);
@@ -46,25 +51,19 @@ const Chat = () => {
     msgs.push({ message });
     setMessages(msgs);
   }
-  if (messages.length === 0) {
-    return <NewChat />;
-  }
   return (
     <>
-      <div className="chat">
-        {messages.length === 0 ? (
-          <Loading />
-        ) : (
-          messages.map((message, index) => {
-            if (index & 1)
-              return (
-                <Reply message={message.message}/>
-              );
+      {messages.length === 0 ? (
+        <NewChat />
+      ) : (
+        <div className="chat">
+          {messages.map((message, index) => {
+            if (index & 1) return <Reply message={message.message} />;
             else return <Message message={message.message} />;
-          })
-        )}
-        {loading && <Loading />}
-      </div>
+          })}
+          {loading && <Loading />}
+        </div>
+      )}
       <div className="searchbar">
         <div className="search-container">
           <input
