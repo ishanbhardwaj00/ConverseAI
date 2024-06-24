@@ -14,7 +14,6 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ isSidebarOpen }) => {
     <div className={`main-chat-screen ${isSidebarOpen ? 'small' : ''}`}>
       <ChatHeading />
       <Chat />
-      <Searchbar />
       <Disclaimer />
     </div>
   );
