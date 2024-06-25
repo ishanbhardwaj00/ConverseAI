@@ -7,9 +7,11 @@ import { useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import axios from "axios";
 import Reply from "../Reply/Reply";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const Chat = () => {
   type MessageType = {
+    type: string;
     message: string;
   };
   // const [messages, setMessages] = useState([
@@ -50,11 +52,19 @@ const Chat = () => {
 
   const [messages, setMessages] = useState<MessageType[]>([]);
   const messagesEndRef = useRef<HTMLElement>(null);
-
+  const [searchBarSelected, setSearchBarSelected] = useState(false);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
+  function submitQuery() {
+    if (!loading && searchQuery.length) {
+      appendMessage({ message: searchQuery });
+      setSearchQuery("");
+      getAnswer(searchQuery);
+    } else {
+      console.log("Loading....... Canot rquet");
+    }
+  }
   useEffect(() => {
     scrollToBottom();
   }, [messages.length]);
@@ -66,25 +76,28 @@ const Chat = () => {
     setLoading(true);
     const prompt = question.trim();
     if (prompt) {
-      const response = await axios.post(
-        "http://192.168.251.212:5555/v1/completions",
-        {
-          model: "/Hard_Disk-2/coe_codestral",
-          prompt: prompt,
-          max_tokens: 1024,
-          temperature: 0.2,
-        }
-      );
-      appendMessage(response.data.choices[0].text);
+      try {
+        const response = await axios.post(
+          "http://192.168.251.212:555/v1/completions",
+          {
+            model: "/Hard_Disk-2/coe_codestral",
+            prompt: prompt,
+            max_tokens: 1024,
+            temperature: 0.2,
+          }
+        );
+        appendMessage({ message: response.data.choices[0].text, type: "text" });
+        console.log(response.data.choices[0].text);
+      } catch (error) {
+        appendMessage({ message: "Error", type: "error" });
+      }
       setLoading(false);
-      console.log(response.data.choices[0].text);
     }
   }
-  function appendMessage(message: string) {
+  function appendMessage(message: MessageType) {
     console.log("aeending mesggse");
-
     const msgs = messages;
-    msgs.push({ message });
+    msgs.push(message);
     setMessages(msgs);
   }
   return (
@@ -94,16 +107,36 @@ const Chat = () => {
       ) : (
         <div id="chat">
           {messages.map((message, index) => {
-            if (index & 1) return <Reply message={message.message} />;
-            else return <Message message={message.message} />;
+            if (index & 1) {
+              if (message.type === "error") {
+                return <ErrorMessage message={message.message} />;
+              }
+              return <Reply message={message.message} />;
+            } else return <Message message={message.message} />;
           })}
           {loading && <Loading />}
           <div ref={messagesEndRef}></div>
         </div>
       )}
-      <div className="searchbar">
+      <div
+        className={`searchbar ${searchBarSelected ? "selected" : "not-selected"}`}
+      >
         <div className="search-container">
           <input
+            onFocus={() => {
+              setSearchBarSelected(true);
+            }}
+            onBlur={() => {
+              setSearchBarSelected(false);
+            }}
+            // onKeyDown={(e) => {
+            //   if (e.key === "ENTER") {
+            //     submitQuery();
+            //   }
+            // }}
+            // onSelect={() => {
+            //   setSearchBarSelected(true);
+            // }}
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -114,15 +147,7 @@ const Chat = () => {
           <IoFlaskOutline
             className="search-icon"
             size={28}
-            onClick={() => {
-              if (!loading) {
-                appendMessage(searchQuery);
-                setSearchQuery("");
-                getAnswer(searchQuery);
-              } else {
-                console.log("Loading....... Canot rquet");
-              }
-            }}
+            onClick={submitQuery}
           />
         </div>
       </div>
