@@ -12,18 +12,44 @@ const Chat = () => {
   type MessageType = {
     message: string;
   };
-  // const [messages, setMessages] = useState([
-  //   {
-  //     message:
-  //       "hello fvij'vwji;vvwjvwr;vw;rivwrjlvwrvliwrjvlviwrjvwlvjwrlvwrjv;lrvjwrilvrvlwir;jvwrlvjrwlvwrjvliwrvjr;lvwrj;vrwvil",
-  //   },
-  //   {
-  //     message: "hello, how can i assist you?",
-  //   },
-  // ]);
+  const [messages, setMessages] = useState([
+    {
+      message:
+        "hello fvij'vwji;vvwjvwr;vw;rivwrjlvwrvliwrjvlviwrjvwlvjwrlvwrjv;lrvjwrilvrvlwir;jvwrlvjrwlvwrjvliwrvjr;lvwrj;vrwvil",
+    },
+    {
+      message: `const mongoose = require('mongoose');
+      const userSchema = new mongoose.Schema({
+        username: {
+          type: String,
+          required: true,
+          unique: true
+        },
+        email: {
+          type: String,
+          required: true,
+          unique: true
+        },
+        password: {
+          type: String,
+          required: true
+        },
+        isAdmin: {
+          type: Boolean,
+          default: false
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now
+        }
+      });
+       
+      module.exports = mongoose.model('User', userSchema)`,
+    },
+  ]);
 
-  // let messages :MessageType[] = [];
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  // let messages: MessageType[] = [];
+  // const [messages, setMessages] = useState<MessageType[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -31,18 +57,20 @@ const Chat = () => {
     console.log("gETTING Nawer");
     setLoading(true);
     const prompt = question.trim();
-    const response = await axios.post(
-      "http://192.168.251.212:5555/v1/completions",
-      {
-        model: "/Hard_Disk-2/coe_codestral",
-        prompt: prompt,
-        max_tokens: 256,
-        temperature: 0.2,
-      }
-    );
-    appendMessage(response.data.choices[0].text);
-    setLoading(false);
-    console.log(response.data.choices[0].text);
+    if (prompt) {
+      const response = await axios.post(
+        "http://192.168.251.212:5555/v1/completions",
+        {
+          model: "/Hard_Disk-2/coe_codestral",
+          prompt: prompt,
+          max_tokens: 1024,
+          temperature: 0.2,
+        }
+      );
+      appendMessage(response.data.choices[0].text);
+      setLoading(false);
+      console.log(response.data.choices[0].text);
+    }
   }
   function appendMessage(message: string) {
     console.log("aeending mesggse");
@@ -78,9 +106,13 @@ const Chat = () => {
             className="search-icon"
             size={28}
             onClick={() => {
-              appendMessage(searchQuery);
-              setSearchQuery("");
-              getAnswer(searchQuery);
+              if (!loading) {
+                appendMessage(searchQuery);
+                setSearchQuery("");
+                getAnswer(searchQuery);
+              } else {
+                console.log("Loading....... Canot rquet");
+              }
             }}
           />
         </div>
