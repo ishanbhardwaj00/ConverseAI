@@ -1,8 +1,6 @@
 import React from "react";
-import { RiMenuFill, RiCloseLargeFill } from "react-icons/ri";
 import Hamburger from "hamburger-react";
 
-import { MdOutlineClose } from "react-icons/md";
 import "./Sidebar.css";
 
 interface SidebarProps {
