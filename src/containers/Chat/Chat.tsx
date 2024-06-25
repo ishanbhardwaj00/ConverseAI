@@ -2,7 +2,7 @@ import Loading from "../../components/Loading";
 import Message from "../../components/Message/Message";
 import NewChat from "../../components/NewChat/NewChat";
 import { IoFlaskOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "./Chat.css";
 import axios from "axios";
@@ -12,44 +12,52 @@ const Chat = () => {
   type MessageType = {
     message: string;
   };
-  const [messages, setMessages] = useState([
-    {
-      message:
-        "hello fvij'vwji;vvwjvwr;vw;rivwrjlvwrvliwrjvlviwrjvwlvjwrlvwrjv;lrvjwrilvrvlwir;jvwrlvjrwlvwrjvliwrvjr;lvwrj;vrwvil",
-    },
-    {
-      message: `const mongoose = require('mongoose');
-      const userSchema = new mongoose.Schema({
-        username: {
-          type: String,
-          required: true,
-          unique: true
-        },
-        email: {
-          type: String,
-          required: true,
-          unique: true
-        },
-        password: {
-          type: String,
-          required: true
-        },
-        isAdmin: {
-          type: Boolean,
-          default: false
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now
-        }
-      });
-       
-      module.exports = mongoose.model('User', userSchema)`,
-    },
-  ]);
+  // const [messages, setMessages] = useState([
+  //   {
+  //     message:
+  //       "hello fvij'vwji;vvwjvwr;vw;rivwrjlvwrvliwrjvlviwrjvwlvjwrlvwrjv;lrvjwrilvrvlwir;jvwrlvjrwlvwrjvliwrvjr;lvwrj;vrwvil",
+  //   },
+  //   {
+  //     message: `const mongoose = require('mongoose');
+  //     const userSchema = new mongoose.Schema({
+  //       username: {
+  //         type: String,
+  //         required: true,
+  //         unique: true
+  //       },
+  //       email: {
+  //         type: String,
+  //         required: true,
+  //         unique: true
+  //       },
+  //       password: {
+  //         type: String,
+  //         required: true
+  //       },
+  //       isAdmin: {
+  //         type: Boolean,
+  //         default: false
+  //       },
+  //       createdAt: {
+  //         type: Date,
+  //         default: Date.now
+  //       }
+  //     });
 
-  // let messages: MessageType[] = [];
-  // const [messages, setMessages] = useState<MessageType[]>([]);
+  //     module.exports = mongoose.model('User', userSchema)`,
+  //   },
+  // ]);
+
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const messagesEndRef = useRef<HTMLElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages.length]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -84,12 +92,13 @@ const Chat = () => {
       {messages.length === 0 ? (
         <NewChat />
       ) : (
-        <div className="chat">
+        <div id="chat">
           {messages.map((message, index) => {
             if (index & 1) return <Reply message={message.message} />;
             else return <Message message={message.message} />;
           })}
           {loading && <Loading />}
+          <div ref={messagesEndRef}></div>
         </div>
       )}
       <div className="searchbar">
