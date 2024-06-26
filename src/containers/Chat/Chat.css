@@ -5,7 +5,7 @@
   flex-direction: column;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 
   gap: 2rem;
 }

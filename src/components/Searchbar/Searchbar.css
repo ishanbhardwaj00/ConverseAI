@@ -24,6 +24,7 @@
     transition: width ease-in 300ms;
 
 }
+
 input[type="text"] {
     flex: 0.9;
     font-size: 1.2rem;

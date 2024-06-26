@@ -11,13 +11,12 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }) => {
   return (
     <div className={`sidebar-container ${isSidebarOpen ? "open" : "closed"}`}>
-      <Hamburger size={24} toggled={isSidebarOpen} toggle={toggleSidebar} />
-      {/* <div onClick={toggleSidebar} className="toggle-button">
-        {isSidebarOpen ? <VscMenu size={28} /> : <VscMenu size={28} />}
-      </div> */}
-      <div className={`sidebar ${isSidebarOpen ? "open" : "closed"}`}>
-        <p>This is the sidebar content</p>
+      <div className="toggle-button">
+        <Hamburger size={25} toggled={isSidebarOpen} toggle={toggleSidebar} />
       </div>
+        {isSidebarOpen ? 
+          <p>this is just a sidebar.</p>
+         : <div>.</div>}
     </div>
   );
 };
