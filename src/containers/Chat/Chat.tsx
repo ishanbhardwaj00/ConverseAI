@@ -9,13 +9,9 @@ import axios from "axios";
 import Reply from "../Reply/Reply";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { v1 } from "uuid";
+import { MessageType } from "../../types/MessageType";
 
 const Chat = () => {
-  type MessageType = {
-    id: string;
-    type: string;
-    message: string;
-  };
   // const [messages, setMessages] = useState([
   //   {
   //     message: "hello"
@@ -43,9 +39,6 @@ const Chat = () => {
   //       },
   //       createdAt: {
   //         type: Date,
-  //         default: Date.now
-  //       }
-  //     });
 
   //     module.exports = mongoose.model('User', userSchema)`,
   //   },
@@ -59,7 +52,7 @@ const Chat = () => {
   };
   function submitQuery() {
     if (!loading && searchQuery.length) {
-      appendMessage({ message: searchQuery, type: "text", id: v1() });
+      appendMessage({ text: searchQuery, type: "text", id: v1() });
       setSearchQuery("");
       getAnswer(searchQuery);
     } else {
@@ -88,13 +81,13 @@ const Chat = () => {
           }
         );
         appendMessage({
-          message: response.data.choices[0].text,
+          text: response.data.choices[0].text,
           type: "text",
           id: v1(),
         });
         console.log(response.data);
       } catch (error) {
-        appendMessage({ message: "Error", type: "error", id: v1() });
+        appendMessage({ text: "Error", type: "error", id: v1() });
       }
       setLoading(false);
     }
@@ -114,10 +107,10 @@ const Chat = () => {
           {messages.map((message, index) => {
             if (index & 1) {
               if (message.type === "error") {
-                return <ErrorMessage message={message.message} />;
+                return <ErrorMessage message={message.text} />;
               }
-              return <Reply id={message.id} message={message.message} />;
-            } else return <Message message={message.message} />;
+              return <Reply {...message} />;
+            } else return <Message {...message} />;
           })}
           {loading && <Loading />}
           <div ref={messagesEndRef}></div>

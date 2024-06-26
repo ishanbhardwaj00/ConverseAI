@@ -3,11 +3,7 @@ import "./Reply.css";
 import Highlight from "react-highlight";
 import { LuClipboard, LuClipboardCheck } from "react-icons/lu";
 import { useState } from "react";
-
-type MessageType = {
-  message: string;
-  id: string;
-};
+import { MessageType } from "../../types/MessageType";
 
 // import { useEffect, useRef } from'react';
 
@@ -28,7 +24,7 @@ type MessageType = {
 //   );
 // };
 
-const parseMessage = (message) => {
+const parseMessage = (message: string) => {
   const parts = message.split(/(```[\s\S]*?```)/).filter(Boolean);
   const [copied, setCopied] = useState(false);
 
@@ -64,9 +60,7 @@ const parseMessage = (message) => {
               />
             )}
           </div>
-          <Highlight key={index} language={language}>
-            {code}
-          </Highlight>
+          <Highlight key={index}>{code}</Highlight>
         </div>
       );
     } else {
@@ -75,8 +69,8 @@ const parseMessage = (message) => {
   });
 };
 
-const Reply = ({ message, id }: MessageType) => {
-  const parsedMessage = parseMessage(message);
+const Reply = ({ text, id }: MessageType) => {
+  const parsedMessage = parseMessage(text);
 
   return (
     <div
