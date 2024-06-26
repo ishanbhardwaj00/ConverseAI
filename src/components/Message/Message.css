@@ -1,10 +1,12 @@
 .message-card {
-    background-color: #682b51;
-    padding: 1rem;
-    max-width: 50%;
-    align-self: flex-end;
-    border-radius: 0.5rem;
-    margin-right: 5rem;
-    text-wrap: wrap;
-    overflow-wrap: break-word;
-};
+  background-color: #682b51;
+  padding: 1rem;
+  max-width: 50%;
+  align-self: flex-end;
+  letter-spacing: 0;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  margin-right: 5rem;
+  text-wrap: wrap;
+  overflow-wrap: break-word;
+}

@@ -6,6 +6,7 @@ import { useState } from "react";
 
 type MessageType = {
   message: string;
+  id: string;
 };
 
 // import { useEffect, useRef } from'react';
@@ -74,11 +75,14 @@ const parseMessage = (message) => {
   });
 };
 
-const Reply = ({ message }: MessageType) => {
+const Reply = ({ message, id }: MessageType) => {
   const parsedMessage = parseMessage(message);
 
   return (
-    <div style={{ paddingLeft: "4rem", paddingRight: "4rem" }}>
+    <div
+      id={id}
+      style={{ paddingLeft: "4rem", paddingRight: "4rem", fontSize: "1.4rem" }}
+    >
       {parsedMessage}
     </div>
   );

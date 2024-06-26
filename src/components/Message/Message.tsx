@@ -1,13 +1,15 @@
-import './Message.css'
+import "./Message.css";
+import { v1 } from "uuid";
+type MessageType = {
+  message: string;
+};
 
-type MessageType =  {
-    message: string
-}
-
-const Message = ({message}: MessageType) => {
+const Message = ({ message }: MessageType) => {
   return (
-    <div className='message-card'>{message}</div>
-  )
-}
+    <div key={v1()} className="message-card">
+      {message}
+    </div>
+  );
+};
 
-export default Message
+export default Message;

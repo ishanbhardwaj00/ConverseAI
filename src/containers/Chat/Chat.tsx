@@ -8,16 +8,17 @@ import "./Chat.css";
 import axios from "axios";
 import Reply from "../Reply/Reply";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import { v1 } from "uuid";
 
 const Chat = () => {
   type MessageType = {
+    id: string;
     type: string;
     message: string;
   };
   // const [messages, setMessages] = useState([
   //   {
-  //     message:
-  //       "hello fvij'vwji;vvwjvwr;vw;rivwrjlvwrvliwrjvlviwrjvwlvjwrlvwrjv;lrvjwrilvrvlwir;jvwrlvjrwlvwrjvliwrvjr;lvwrj;vrwvil",
+  //     message: "hello"
   //   },
   //   {
   //     message: `const mongoose = require('mongoose');
@@ -51,18 +52,18 @@ const Chat = () => {
   // ]);
 
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const messagesEndRef = useRef<HTMLElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [searchBarSelected, setSearchBarSelected] = useState(false);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   function submitQuery() {
     if (!loading && searchQuery.length) {
-      appendMessage({ message: searchQuery });
+      appendMessage({ message: searchQuery, type: "text", id: v1() });
       setSearchQuery("");
       getAnswer(searchQuery);
     } else {
-      console.log("Loading....... Canot rquet");
+      console.log("Loading....... Cannot request");
     }
   }
   useEffect(() => {
@@ -72,13 +73,13 @@ const Chat = () => {
   const [loading, setLoading] = useState(false);
 
   async function getAnswer(question: string) {
-    console.log("gETTING Nawer");
+    console.log("Getting  answer");
     setLoading(true);
     const prompt = question.trim();
     if (prompt) {
       try {
         const response = await axios.post(
-          "http://192.168.251.212:555/v1/completions",
+          "http://192.168.251.212:5555/v1/completions",
           {
             model: "/Hard_Disk-2/coe_codestral",
             prompt: prompt,
@@ -86,16 +87,20 @@ const Chat = () => {
             temperature: 0.2,
           }
         );
-        appendMessage({ message: response.data.choices[0].text, type: "text" });
-        console.log(response.data.choices[0].text);
+        appendMessage({
+          message: response.data.choices[0].text,
+          type: "text",
+          id: v1(),
+        });
+        console.log(response.data);
       } catch (error) {
-        appendMessage({ message: "Error", type: "error" });
+        appendMessage({ message: "Error", type: "error", id: v1() });
       }
       setLoading(false);
     }
   }
   function appendMessage(message: MessageType) {
-    console.log("aeending mesggse");
+    console.log("appending message");
     const msgs = messages;
     msgs.push(message);
     setMessages(msgs);
@@ -111,7 +116,7 @@ const Chat = () => {
               if (message.type === "error") {
                 return <ErrorMessage message={message.message} />;
               }
-              return <Reply message={message.message} />;
+              return <Reply id={message.id} message={message.message} />;
             } else return <Message message={message.message} />;
           })}
           {loading && <Loading />}
