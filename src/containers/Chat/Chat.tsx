@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import Reply from "../Reply/Reply";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-import { MessageType } from "../../types/MessageType";
 import Searchbar from "../../components/Searchbar/Searchbar";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 const Chat = () => {
   // const [messages, setMessages] = useState([
@@ -37,7 +37,7 @@ const Chat = () => {
   //   },
   // ]);
 
-  const [messages, setMessages] = useState<MessageType[]>([]);
+  const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
 
@@ -48,6 +48,7 @@ const Chat = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages.length]);
+  console.log(messages);
 
   return (
     <>
@@ -57,7 +58,7 @@ const Chat = () => {
         <div id="chat">
           {messages.map((message, index) => {
             if (message.role === "assistant") {
-              if (message.content.length === 0) {
+              if (message.content && message.content.length === 0) {
                 return <ErrorMessage message="errors" />;
               }
               return <Reply {...message} />;

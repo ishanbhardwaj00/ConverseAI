@@ -1,11 +1,11 @@
 import { v1 } from "uuid";
-import { MessageType } from "../../types/MessageType";
 import "./Message.css";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
-const Message = ({ content }: MessageType) => {
+const Message = ({ content }: ChatCompletionMessageParam) => {
   return (
     <div key={v1()} className="message-card">
-      {content}
+      {content?.toString()}
     </div>
   );
 };
