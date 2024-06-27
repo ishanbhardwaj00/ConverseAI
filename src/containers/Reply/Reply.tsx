@@ -4,6 +4,7 @@ import Highlight from "react-highlight";
 import { LuClipboard, LuClipboardCheck } from "react-icons/lu";
 import { useState } from "react";
 import { MessageType } from "../../types/MessageType";
+import { v1 } from "uuid";
 
 // import { useEffect, useRef } from'react';
 
@@ -64,18 +65,18 @@ const parseMessage = (message: string) => {
         </div>
       );
     } else {
-      return <p key={index}>{part}</p>;
       return <Highlight key={index}>{part}</Highlight>;
+      return <p key={index}>{part}</p>;
     }
   });
 };
 
-const Reply = ({ text, id }: MessageType) => {
-  const parsedMessage = parseMessage(text);
+const Reply = ({ content }: MessageType) => {
+  const parsedMessage = parseMessage(content);
 
   return (
     <div
-      id={id}
+      id={v1()}
       style={{ paddingLeft: "4rem", paddingRight: "4rem", fontSize: "1.4rem" }}
     >
       {parsedMessage}

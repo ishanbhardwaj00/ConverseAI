@@ -1,11 +1,7 @@
-import './ChatHeading.css'
+import "./ChatHeading.css";
 
 const ChatHeading = () => {
-  return (
-    <div className="chat-header">
-        Creating a JSX component
-    </div>
-  )
-}
+  return <div className="chat-header">New Chat</div>;
+};
 
-export default ChatHeading
+export default ChatHeading;

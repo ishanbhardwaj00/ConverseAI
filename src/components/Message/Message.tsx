@@ -1,10 +1,11 @@
+import { v1 } from "uuid";
 import { MessageType } from "../../types/MessageType";
 import "./Message.css";
 
-const Message = ({ id, text }: MessageType) => {
+const Message = ({ content }: MessageType) => {
   return (
-    <div key={id} className="message-card">
-      {text}
+    <div key={v1()} className="message-card">
+      {content}
     </div>
   );
 };

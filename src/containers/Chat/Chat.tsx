@@ -56,9 +56,9 @@ const Chat = () => {
       ) : (
         <div id="chat">
           {messages.map((message, index) => {
-            if (index & 1) {
-              if (message.type === "error") {
-                return <ErrorMessage message={message.text} />;
+            if (message.role === "assistant") {
+              if (message.content.length === 0) {
+                return <ErrorMessage message="errors" />;
               }
               return <Reply {...message} />;
             } else return <Message {...message} />;

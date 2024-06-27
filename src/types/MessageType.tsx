@@ -1,5 +1,4 @@
 export type MessageType = {
-  id: string;
-  type: string;
-  text: string;
+  role: string;
+  content: string;
 };

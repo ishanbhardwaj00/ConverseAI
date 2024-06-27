@@ -21,9 +21,8 @@ const Searchbar = ({
 
   function submitQuery() {
     if (!loading && searchQuery.length) {
-      appendMessage({ text: searchQuery, type: "text", id: v1() });
-      setSearchQuery("");
-      getAnswer(searchQuery);
+      appendMessage({ content: searchQuery, role: "user" });
+      getAnswer();
     } else {
       console.log("Loading....... Cannot request");
     }
@@ -35,31 +34,30 @@ const Searchbar = ({
     setMessages(msgs);
   }
 
-  async function getAnswer(question: string) {
+  async function getAnswer() {
     console.log("Getting  answer");
     setLoading(true);
-    const prompt = question.trim();
-    if (prompt) {
+    if (searchQuery.length) {
       try {
-        const response = await axios.post(
-          "http://192.168.251.212:5555/v1/completions",
-          {
-            model: "/Hard_Disk-2/coe_codestral",
-            prompt: prompt,
-            max_tokens: 2048,
-            temperature: 0.2,
-          }
-        );
+        console.log(JSON.stringify(messages));
+
+        const response = await axios.post("http://localhost:3000/", {
+          messages: messages,
+          model: "/Hard_Disk-2/coe_codestral",
+        });
         appendMessage({
-          text: response.data.choices[0].text,
-          type: "text",
-          id: v1(),
+          content: response.data.choices[0].message.content,
+          role: "assistant",
         });
         console.log(response.data);
       } catch (error) {
-        appendMessage({ text: "Error", type: "error", id: v1() });
+        appendMessage({
+          content: "",
+          role: "assistant",
+        });
       }
       setLoading(false);
+      setSearchQuery("");
     }
   }
   return (
