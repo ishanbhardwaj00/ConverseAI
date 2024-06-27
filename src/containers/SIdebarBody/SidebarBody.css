@@ -1,0 +1,14 @@
+.sidebar-body {
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.header {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: #534c63;
+}

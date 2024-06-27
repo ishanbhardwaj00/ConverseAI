@@ -65,6 +65,7 @@ const parseMessage = (message: string) => {
       );
     } else {
       return <p key={index}>{part}</p>;
+      return <Highlight key={index}>{part}</Highlight>;
     }
   });
 };

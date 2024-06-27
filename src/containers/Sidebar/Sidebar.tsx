@@ -2,6 +2,7 @@ import React from "react";
 import Hamburger from "hamburger-react";
 
 import "./Sidebar.css";
+import SidebarBody from "../SIdebarBody/SidebarBody";
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -14,9 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, toggleSidebar }) => {
       <div className="toggle-button">
         <Hamburger size={25} toggled={isSidebarOpen} toggle={toggleSidebar} />
       </div>
-        {isSidebarOpen ? 
-          <p>this is just a sidebar.</p>
-         : <div>.</div>}
+      {isSidebarOpen ? <SidebarBody /> : <div>.</div>}
     </div>
   );
 };
