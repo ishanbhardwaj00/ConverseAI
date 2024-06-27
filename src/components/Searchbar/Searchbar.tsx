@@ -29,8 +29,9 @@ const Searchbar = ({
   }
   function appendMessage(message: MessageType) {
     console.log("appending message");
-    const msgs = messages;
-    msgs.push(message);
+    const msgs = [...messages, message]; 
+    // const msgs = messages;
+    // msgs.push(message);
     setMessages(msgs);
   }
 
@@ -75,6 +76,12 @@ const Searchbar = ({
           // onKeyDown={(e) => {
           //   if (e.key === "ENTER")React.Dispatch<React.SetStateAction<string>>(true);
           // }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              submitQuery();
+              setSearchQuery("");
+            }
+          }}
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -85,7 +92,11 @@ const Searchbar = ({
         <IoFlaskOutline
           className="search-icon"
           size={28}
-          onClick={submitQuery}
+          // onClick={submitQuery}
+          onClick={() => {
+            submitQuery();
+            setSearchQuery("");
+        }}
         />
       </div>
     </div>
